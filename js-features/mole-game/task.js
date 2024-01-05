@@ -36,7 +36,3 @@ function checkHole(n) {
 function getHole(n) {
     return document.getElementById(`hole${n}`);
 }
-
-
-
-// console.log(winningPoints.textContent);
