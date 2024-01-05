@@ -1,6 +1,8 @@
 let winningPoints = document.getElementById('dead');
 let losingPoints = document.getElementById('lost');
 
+
+
 holeCheck();
 
 function holeCheck() {
@@ -17,8 +19,24 @@ function checkHole(n) {
    } else {
     losingPoints.textContent++;
    }
+   
+   if (winningPoints.textContent == 10) {
+    alert("Ура! Победа!");
+    winningPoints.textContent = 0;
+    losingPoints.textContent = 0;
+   }
+
+   if (losingPoints.textContent == 5) {
+    alert("Ты проиграл!");
+    winningPoints.textContent = 0;
+    losingPoints.textContent = 0;
+   }
 }
 
 function getHole(n) {
     return document.getElementById(`hole${n}`);
 }
+
+
+
+// console.log(winningPoints.textContent);
