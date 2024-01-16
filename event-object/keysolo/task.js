@@ -12,20 +12,41 @@ class Game {
 
   reset() {
     this.setNewWord();
+    this.timer();
     this.winsElement.textContent = 0;
     this.lossElement.textContent = 0;
   }
 
   registerEvents() {
-    /*
-      TODO:
-      Написать обработчик события, который откликается
-      на каждый введённый символ.
-      В случае правильного ввода слова вызываем this.success()
-      При неправильном вводе символа - this.fail();
-      DOM-элемент текущего символа находится в свойстве this.currentSymbol.
-     */
+    document.addEventListener("keydown", symbolCheck);
+    const x = this; 
+    function symbolCheck(event) {
+      let currentLetter = x.currentSymbol.textContent.toLowerCase();
+      let eventLetter = event.key.toLowerCase();
+      if (currentLetter == eventLetter) {
+        x.success();
+      } else {
+        x.fail();
+      }
+    }
   }
+
+  timer() {
+    const x = this;
+    let seconds = document.getElementById("seconds"); 
+    seconds.textContent = Array.from(document.getElementsByClassName("symbol")).length;
+    function countdown() { 
+      seconds.textContent--;
+      if (seconds.textContent == 0) {
+      x.fail();
+      clearInterval(intervalId);
+      } 
+      clearInterval(intervalId);
+    }
+    let intervalId = setInterval(countdown, 1000);
+  }
+   
+
 
   success() {
     if(this.currentSymbol.classList.contains("symbol_current")) this.currentSymbol.classList.remove("symbol_current");
@@ -42,6 +63,7 @@ class Game {
       this.reset();
     }
     this.setNewWord();
+    this.timer();
   }
 
   fail() {
@@ -50,6 +72,7 @@ class Game {
       this.reset();
     }
     this.setNewWord();
+    this.timer();
   }
 
   setNewWord() {
@@ -57,6 +80,7 @@ class Game {
 
     this.renderWord(word);
   }
+   
 
   getWord() {
     const words = [
