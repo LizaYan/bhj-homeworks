@@ -22,20 +22,17 @@ function addToCart(event) {
     const cart = Array.from(document.getElementsByClassName("cart__products"));
     const selectedProduct = event.target.closest(".product");
 
-    cart[0].insertAdjacentHTML("beforeEnd", "<div class='cart__product' data-id='1'><img class='cart__product-image' src=''><div class='cart__product-count'>20</div></div>");
     const cartProduct = Array.from(document.getElementsByClassName("cart__product")); 
+    const productInCard = cartProduct.find((elem) => elem.dataset.id == selectedProduct.dataset.id);
 
-    if (selectedProduct.querySelector(".product__quantity-value").textContent > 0) {
-        cartProduct[cartProduct.length - 1].dataset.id = selectedProduct.dataset.id;
-        cartProduct[cartProduct.length - 1].firstChild.src = selectedProduct.querySelector("img").src;
-        cartProduct[cartProduct.length - 1].lastChild.textContent = selectedProduct.querySelector(".product__quantity-value").textContent;
+    if (productInCard) {
+        productInCard.lastChild.textContent = Number(productInCard.lastChild.textContent) + Number(selectedProduct.querySelector(".product__quantity-value").textContent);
+    } else if (selectedProduct.querySelector(".product__quantity-value").textContent > 0) {
+        cart[0].insertAdjacentHTML("beforeEnd", "<div class='cart__product' data-id='1'><img class='cart__product-image''><div class='cart__product-count'>20</div></div>");
+        cart[0].lastChild.dataset.id = selectedProduct.dataset.id;
+        console.log(selectedProduct.querySelector("img").src);
+        cart[0].lastChild.firstChild.src = selectedProduct.querySelector("img").src;
+        cart[0].lastChild.lastChild.textContent = selectedProduct.querySelector(".product__quantity-value").textContent;
     }
-    
-    for (let i = 0; i < cartProduct.length - 1; i++) {
-        if (cartProduct.length > 1 && cartProduct[i].dataset.id == cartProduct[cartProduct.length - 1].dataset.id) {
-            cartProduct[i].lastChild.textContent = Number(cartProduct[i].lastChild.textContent) + Number(selectedProduct.querySelector(".product__quantity-value").textContent);
-            cartProduct[cartProduct.length - 1].remove();
-        }
-    }
-    
 }
+    
