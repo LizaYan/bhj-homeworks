@@ -6,7 +6,6 @@ window.addEventListener("load", cookieCheck);
 function closePopup(event) {
     popup.classList.remove("modal_active");
     document.cookie = "popup_closed=true";
-    console.log(document.cookie)
 }
 
 function cookieCheck(event) {
