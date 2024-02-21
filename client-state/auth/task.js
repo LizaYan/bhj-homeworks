@@ -1,4 +1,3 @@
-const xhr = new XMLHttpRequest();
 const signinBlock = document.getElementById("signin");
 const form = document.getElementsByTagName("form");
 const welcome = document.getElementById("welcome");
@@ -20,20 +19,20 @@ function idCheck(event) {
 
 function submitForm(event) {
     event.preventDefault(); 
-    const formData = new FormData();
-    formData.append('login', form[0].querySelector(".control").value);
-    formData.append('password', form[0].querySelectorAll(".control")[1].value);
+    const xhr = new XMLHttpRequest();
+    const formData = new FormData(signin__form);
 
-    if (xhr.readyState === xhr.DONE) {
-        if (JSON.parse(xhr.response).success == true) {
-            localStorage.setItem("id", JSON.parse(xhr.response).user_id); 
+    xhr.addEventListener("load", responseCheck);
+    function responseCheck() {
+        if (xhr.response.success == true) {
+            localStorage.setItem("id", xhr.response.user_id); 
             showWelcome();
         } else {
             alert("Неверный логин/пароль");
         }
     }
 
+    xhr.responseType = 'json';
     xhr.open("POST", "https://students.netoservices.ru/nestjs-backend/auth", true);
     xhr.send(formData);
-   
 }

@@ -3,9 +3,7 @@ editor.addEventListener("blur", saveText);
 window.addEventListener("load", restoreText);
 
 function saveText(event) {
-    if (event.target.value) {;
-        localStorage.setItem("text", event.target.value); 
-    }
+    localStorage.setItem("text", event.target.value); 
 }
 
 function restoreText() {
